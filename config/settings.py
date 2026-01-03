@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['localhost',
 
 INSTALLED_APPS = [
     "rest_framework",
-    "bootstrap4",
+    "django_bootstrap5",
     "main.apps.MainConfig",
     "django.contrib.admin",
     "django.contrib.auth",
