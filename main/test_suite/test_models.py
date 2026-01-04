@@ -6,14 +6,14 @@ Unit tests for core prototype models, validating system-derived
 sensory_level behaviour and basic model representations.
 
 Author: Gavin Plucknett
-Created: 2026-01-04
+Created: 2026-01-01
 Current Version: v1.0
 
 Change Log:
 ------------------------------------------------------------
 Version | Date       | Change Description                                  | Reference
 ------------------------------------------------------------
-v1.0    | 2026-01-04 | Tests for sensory derivation + model relationships  | DEV-502
+v1.0    | 2026-01-01 | Tests for sensory derivation + model relationships  | DEV-124
 ============================================================
 """
 
