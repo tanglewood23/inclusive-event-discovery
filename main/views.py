@@ -11,10 +11,9 @@ Current Version: v1.1
 
 Change Log:
 ------------------------------------------------------------
-Version | Date       | Change Description                                  | Reference
+Version | Date       | Change Description                      | Reference
 ------------------------------------------------------------
-v1.0    | 2026-01-04 | Added Event list and detail views                  | DEV-120
-v1.1    | 2026-01-04 | Added holding page view for URL testing            | DEV-119
+v1.0    | 2026-01-04 | Added holding page view for URL testing | DEV-119          
 ============================================================
 """
 from django.shortcuts import render
