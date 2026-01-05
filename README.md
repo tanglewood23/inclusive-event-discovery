@@ -213,7 +213,84 @@ Design choices are grounded in participatory research and inclusive design princ
 
 ---
 
-## 10. How to Run the Project
+## 10. Installation & Running the Project
+
+These instructions describe how to run the prototype locally for assessment and demonstration purposes.
+
+Prerequisites
+
+Python 3.10+
+
+pip (Python package manager)
+
+Virtual environment support (venv)
+
+SQLite (included with Python)
+
+1. Clone the Repository
+git clone https://github.com/tanglewood23/inclusive-event-discovery.git
+cd inclusive-event-discovery
+
+2. Create and Activate a Virtual Environment
+
+macOS / Linux
+
+python3 -m venv venv
+source venv/bin/activate
+
+
+Windows
+
+python -m venv venv
+venv\Scripts\activate
+
+3. Install Dependencies
+pip install -r requirements.txt
+
+4. Database Setup
+
+Run migrations to create the database schema:
+
+python manage.py migrate
+
+5. Load Reference Data (Required)
+
+Iteration 2 relies on seeded reference data.
+
+python manage.py loaddata sensory_categories.json
+python manage.py loaddata lookup_options.json
+
+
+(Optional demo data may also be loaded if present.)
+
+6. Create Superuser (if not already present)
+
+A superuser is required to access the admin interface.
+
+python manage.py createsuperuser
+
+
+For assessment purposes, a default superuser is provided:
+
+Username: admin
+
+Password: admin
+
+7. Run the Development Server
+python manage.py runserver
+
+8. Access the Application
+
+Admin Interface:
+http://127.0.0.1:8000/admin/
+
+Event List (UI):
+http://127.0.0.1:8000/
+
+Events API:
+http://127.0.0.1:8000/api/events/
+
+## 11. How to Run the Project
 
 ```bash
 python -m venv venv
