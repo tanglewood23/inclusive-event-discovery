@@ -22,6 +22,7 @@ v2.0    | 2026-01-05 | Normalised coded choices + added Venue + categories| DEV-
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 
 class SensoryCategory(models.Model):
@@ -70,20 +71,34 @@ class LookupOption(models.Model):
         super().clean()
 
         # Event categories must NOT be sensory
-        if self.option_type == "EVENT_CATEGORY" and self.sensory_category_id:
+        if self.option_type == "EVENT_CATEGORY" and self.category_id:
             raise ValidationError({
-                "sensory_category": "Event categories must not be assigned to a sensory category."
+                "category": "Event categories must not be assigned to a sensory category."
             })
 
         # Accessibility options SHOULD be sensory
-        if self.option_type == "ACCESSIBILITY_LEVEL" and not self.sensory_category_id:
+        if self.option_type == "ACCESSIBILITY_LEVEL" and not self.category_id:
             raise ValidationError({
-                "sensory_category": "Accessibility options must be assigned to a sensory category."
+                "category": "Accessibility options must be assigned to a sensory category."
             })
 
     class Meta:
-        unique_together = ("option_type", "code")
+        constraints = [
+            # Non-sensory options (e.g. EVENT_CATEGORY): unique per (option_type, code)
+            models.UniqueConstraint(
+                fields=["option_type", "code"],
+                condition=Q(category__isnull=True),
+                name="uniq_lookupoption_nonsensory_type_code",
+            ),
+            # Sensory options: unique per (option_type, category, code)
+            models.UniqueConstraint(
+                fields=["option_type", "category", "code"],
+                condition=Q(category__isnull=False),
+                name="uniq_lookupoption_sensory_type_cat_code",
+            ),
+        ]
         ordering = ("option_type","display_order", "label")
+
 
     def __str__(self):
         return self.label
