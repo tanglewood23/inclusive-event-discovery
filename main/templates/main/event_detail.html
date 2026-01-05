@@ -1,0 +1,89 @@
+<!--
+============================================================
+File Name: event_detail.html
+Brief Description:
+Displays event details and linked accessibility information for
+a single event.
+
+Author: Gavin Plucknett
+Created: 2026-01-04
+Current Version: v1.0
+
+Change Log:
+------------------------------------------------------------
+Version | Date       | Change Description                                  | Reference
+------------------------------------------------------------
+v1.0    | 2026-01-04 | Initial event detail template incl. accessibility   | DEV-121
+============================================================
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ event.title }}</title>
+</head>
+<body>
+    <p><a href="{% url 'main:event_list' %}">← Back to events</a></p>
+
+    <h1>{{ event.title }}</h1>
+
+    <p><strong>Category:</strong> {{ event.category }}</p>
+    <p><strong>Date/Time:</strong> {{ event.start_datetime }} – {{ event.end_datetime }}</p>
+    <p><strong>Location:</strong> {{ event.location_text }}{% if event.postcode %} ({{ event.postcode }}){% endif %}</p>
+
+    {% if event.price %}
+        <p><strong>Price:</strong> £{{ event.price }}</p>
+    {% else %}
+        <p><strong>Price:</strong> Not specified</p>
+    {% endif %}
+
+    <p><strong>Booking required:</strong> {{ event.booking_required|yesno:"Yes,No" }}</p>
+
+    {% if event.booking_required and event.booking_url %}
+        <p><strong>Booking link:</strong> <a href="{{ event.booking_url }}">{{ event.booking_url }}</a></p>
+    {% endif %}
+
+    <h2>Description</h2>
+    <p>{{ event.description }}</p>
+
+    <hr>
+
+    <h2>Accessibility Information</h2>
+
+    {% if event.accessibility_profile %}
+        <ul>
+            <li><strong>Wheelchair access:</strong> {{ event.accessibility_profile.wheelchair_access|yesno:"Yes,No" }}</li>
+
+            {% if event.accessibility_profile.accessible_toilets is not None %}
+                <li><strong>Accessible toilets:</strong> {{ event.accessibility_profile.accessible_toilets|yesno:"Yes,No" }}</li>
+            {% else %}
+                <li><strong>Accessible toilets:</strong> Not specified</li>
+            {% endif %}
+
+            {% if event.accessibility_profile.quiet_space_available is not None %}
+                <li><strong>Quiet space available:</strong> {{ event.accessibility_profile.quiet_space_available|yesno:"Yes,No" }}</li>
+            {% else %}
+                <li><strong>Quiet space available:</strong> Not specified</li>
+            {% endif %}
+
+            <li><strong>Noise level:</strong> {{ event.accessibility_profile.noise_level }}</li>
+            <li><strong>Lighting conditions:</strong> {{ event.accessibility_profile.lighting_conditions }}</li>
+            <li><strong>Crowd level:</strong> {{ event.accessibility_profile.crowd_level }}</li>
+
+            {% if event.accessibility_profile.sensory_level %}
+                <li><strong>Sensory level:</strong> {{ event.accessibility_profile.sensory_level }}</li>
+            {% endif %}
+        </ul>
+
+        {% if event.accessibility_profile.additional_notes %}
+            <h3>Additional notes</h3>
+            <p>{{ event.accessibility_profile.additional_notes }}</p>
+        {% endif %}
+
+        <p><em>Accessibility information is provided as guidance and may vary by individual needs.</em></p>
+    {% else %}
+        <p><strong>Accessibility information is not available for this event.</strong></p>
+    {% endif %}
+</body>
+</html>
