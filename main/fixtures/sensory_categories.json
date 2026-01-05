@@ -1,0 +1,42 @@
+[
+    {
+        "model": "main.sensorycategory",
+        "pk": 1,
+        "fields": {
+            "label": "Noise",
+            "code": "NOISE",
+            "description": "Sound levels and auditory impact",
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.sensorycategory",
+        "pk": 2,
+        "fields": {
+            "label": "Lighting",
+            "code": "LIGHTING",
+            "description": "Brightness, flicker, and visual conditions",
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.sensorycategory",
+        "pk": 3,
+        "fields": {
+            "label": "Crowd",
+            "code": "CROWD",
+            "description": "Crowd size, density, and movement",
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.sensorycategory",
+        "pk": 4,
+        "fields": {
+            "label": "Overall Sensory Load",
+            "code": "SENSORY",
+            "description": "Overall sensory intensity of the event",
+            "is_active": true
+        }
+    }
+]

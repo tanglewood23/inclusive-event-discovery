@@ -1,0 +1,170 @@
+[
+    {
+        "model": "main.lookupoption",
+        "pk": 1,
+        "fields": {
+            "option_type": "EVENT_CATEGORY",
+            "code": "SOCIAL",
+            "label": "Social",
+            "description": "Social and community events",
+            "category": null,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 2,
+        "fields": {
+            "option_type": "EVENT_CATEGORY",
+            "code": "SPORTS",
+            "label": "Sports",
+            "description": "Sports and physical activity events",
+            "category": null,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 10,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "LOW",
+            "label": "Low",
+            "description": "Low noise levels",
+            "category": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 11,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "MEDIUM",
+            "label": "Medium",
+            "description": "Moderate noise levels",
+            "category": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 12,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "HIGH",
+            "label": "High",
+            "description": "High noise levels",
+            "category": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 20,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "STANDARD",
+            "label": "Standard",
+            "description": "Standard lighting",
+            "category": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 21,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "DIM",
+            "label": "Dim",
+            "description": "Low or dim lighting",
+            "category": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 22,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "FLASHING",
+            "label": "Flashing",
+            "description": "Flashing or strobe lighting",
+            "category": 2,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 30,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "SMALL",
+            "label": "Small",
+            "description": "Small crowd size",
+            "category": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 31,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "MEDIUM",
+            "label": "Medium",
+            "description": "Moderate crowd size",
+            "category": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 32,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "LARGE",
+            "label": "Large",
+            "description": "Large or dense crowds",
+            "category": 3,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 40,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "LOW",
+            "label": "Low",
+            "description": "Low overall sensory load",
+            "category": 4,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 41,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "MEDIUM",
+            "label": "Medium",
+            "description": "Moderate overall sensory load",
+            "category": 4,
+            "is_active": true
+        }
+    },
+    {
+        "model": "main.lookupoption",
+        "pk": 42,
+        "fields": {
+            "option_type": "ACCESSIBILITY_LEVEL",
+            "code": "HIGH",
+            "label": "High",
+            "description": "High overall sensory load",
+            "category": 4,
+            "is_active": true
+        }
+    }
+]
