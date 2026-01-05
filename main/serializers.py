@@ -6,22 +6,43 @@ Serializers for the prototype REST API. Provides read-only
 serialization for Event and linked AccessibilityProfile.
 
 Author: Gavin Plucknett
-Created: 2026-01-04
-Current Version: v1.0
+Updated: 2026-01-05
+Current Version: v2.0
 
 Change Log:
 ------------------------------------------------------------
-Version | Date       | Change Description                     | Reference
+Version | Date       | Change Description                          | Reference
 ------------------------------------------------------------
-v1.0    | 2026-01-04 | Initial serializers for Event API      | DEV-123
+v2.0    | 2026-01-05 | Nested LookupOption output (code/label)     | DEV-142
 ============================================================
 """
 
 from rest_framework import serializers
-from .models import Event, AccessibilityProfile
+from .models import Event, AccessibilityProfile, LookupOption, SensoryCategory
 
-# AccessibilityProfile serializer format
+
+class SensoryCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SensoryCategory
+        fields = ["code", "label"]
+        read_only_fields = fields
+
+
+class LookupOptionSerializer(serializers.ModelSerializer):
+    category = SensoryCategorySerializer(read_only=True)
+
+    class Meta:
+        model = LookupOption
+        fields = ["code", "label", "category"]
+        read_only_fields = fields
+
+
 class AccessibilityProfileSerializer(serializers.ModelSerializer):
+    noise_level = LookupOptionSerializer(read_only=True)
+    lighting_conditions = LookupOptionSerializer(read_only=True)
+    crowd_level = LookupOptionSerializer(read_only=True)
+    sensory_level = LookupOptionSerializer(read_only=True)
+
     class Meta:
         model = AccessibilityProfile
         fields = [
@@ -32,14 +53,16 @@ class AccessibilityProfileSerializer(serializers.ModelSerializer):
             "noise_level",
             "lighting_conditions",
             "crowd_level",
-            "sensory_level",       # remove if you deleted this field
+            "sensory_level",
             "additional_notes",
+            "created_at",
+            "updated_at",
         ]
         read_only_fields = fields
 
-#Event Serializer format
+
 class EventSerializer(serializers.ModelSerializer):
-    #Include accessibility data
+    category = LookupOptionSerializer(read_only=True)
     accessibility_profile = AccessibilityProfileSerializer(read_only=True)
 
     class Meta:
