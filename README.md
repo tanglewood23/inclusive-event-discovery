@@ -238,4 +238,4 @@ Access:
 * Accessibility attributes are descriptive, not prescriptive; the system supports informed decision-making rather than automated suitability judgments.
 * Several entities (venue accessibility, media, reviews) are intentionally deferred and documented as future work.
 
-This repository should be read alongside the submitted design report for full context.
+This repository should be read alongside the submitted design report for full context..
