@@ -1,0 +1,54 @@
+<!--
+============================================================
+File Name: event_list.html
+Brief Description:
+Lists published events for browsing/discovery. Includes a
+placeholder message when no events are available.
+
+Author: Gavin Plucknett
+Created: 2026-01-04
+Current Version: v1.0
+
+Change Log:
+------------------------------------------------------------
+Version | Date       | Change Description                                  | Reference
+------------------------------------------------------------
+v1.0    | 2026-01-04 | Initial event list template with empty-state message| DEV-121
+============================================================
+-->
+
+<!-- Basic event page, no accessability or styling added -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Events</title>
+</head>
+<body>
+    <h1>Events</h1>
+
+    {% comment %} if events exist list them else say no events found {% endcomment %}
+    {% if events %}
+        <ul>
+            {% for event in events %}
+                <li>
+                    <h2>{{ event.title }}</h2>
+                    <p>{{ event.start_datetime }} – {{ event.end_datetime }}</p>
+                    <p><strong>Location:</strong> {{ event.location_text }}</p>
+
+                    <p>
+                        <a href="{% url 'main:event_detail' event.pk %}">
+                            View details
+                        </a>
+                    </p>
+                    <hr>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p><strong>No events found.</strong></p>
+        <p>Please check back later.</p>
+    {% endif %}
+</body>
+</html>

@@ -23,6 +23,6 @@ from . import views
 app_name = "main"
 
 urlpatterns = [
-    path("events/", views.HoldingPageView.as_view(), name="event_list"),
-    path("events/<int:pk>/", views.HoldingPageView.as_view(), name="event_detail"),
+    path("events/", views.EventListView.as_view(), name="event_list"),
+    path("events/<int:pk>/", views.EventDetailView.as_view(), name="event_detail"),
 ]
