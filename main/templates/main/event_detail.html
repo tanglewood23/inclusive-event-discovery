@@ -20,70 +20,98 @@ v1.0    | 2026-01-04 | Initial event detail template incl. accessibility   | DEV
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ event.title }}</title>
+  <meta charset="UTF-8">
+  <title>{{ event.title }}</title>
 </head>
 <body>
-    <p><a href="{% url 'main:event_list' %}">← Back to events</a></p>
 
-    <h1>{{ event.title }}</h1>
+  <p><a href="{% url 'main:event_list' %}">← Back to events</a></p>
 
-    <p><strong>Category:</strong> {{ event.category }}</p>
-    <p><strong>Date/Time:</strong> {{ event.start_datetime }} – {{ event.end_datetime }}</p>
-    <p><strong>Location:</strong> {{ event.location_text }}{% if event.postcode %} ({{ event.postcode }}){% endif %}</p>
+  <h1>{{ event.title }}</h1>
 
-    {% if event.price %}
-        <p><strong>Price:</strong> £{{ event.price }}</p>
-    {% else %}
-        <p><strong>Price:</strong> Not specified</p>
-    {% endif %}
+  {% if event.category %}
+    <p><strong>Category:</strong> {{ event.category.label }}</p>
+  {% endif %}
 
-    <p><strong>Booking required:</strong> {{ event.booking_required|yesno:"Yes,No" }}</p>
+  <p>
+    <strong>When:</strong>
+    {{ event.start_datetime|date:"D j M Y, H:i" }}
+    –
+    {{ event.end_datetime|date:"D j M Y, H:i" }}
+  </p>
 
-    {% if event.booking_required and event.booking_url %}
-        <p><strong>Booking link:</strong> <a href="{{ event.booking_url }}">{{ event.booking_url }}</a></p>
-    {% endif %}
+  <p><strong>Where:</strong> {{ event.location_text }}{% if event.postcode %} ({{ event.postcode }}){% endif %}</p>
 
+  {% if event.description %}
     <h2>Description</h2>
     <p>{{ event.description }}</p>
+  {% endif %}
 
-    <hr>
-
-    <h2>Accessibility Information</h2>
-
-    {% if event.accessibility_profile %}
-        <ul>
-            <li><strong>Wheelchair access:</strong> {{ event.accessibility_profile.wheelchair_access|yesno:"Yes,No" }}</li>
-
-            {% if event.accessibility_profile.accessible_toilets is not None %}
-                <li><strong>Accessible toilets:</strong> {{ event.accessibility_profile.accessible_toilets|yesno:"Yes,No" }}</li>
-            {% else %}
-                <li><strong>Accessible toilets:</strong> Not specified</li>
-            {% endif %}
-
-            {% if event.accessibility_profile.quiet_space_available is not None %}
-                <li><strong>Quiet space available:</strong> {{ event.accessibility_profile.quiet_space_available|yesno:"Yes,No" }}</li>
-            {% else %}
-                <li><strong>Quiet space available:</strong> Not specified</li>
-            {% endif %}
-
-            <li><strong>Noise level:</strong> {{ event.accessibility_profile.noise_level }}</li>
-            <li><strong>Lighting conditions:</strong> {{ event.accessibility_profile.lighting_conditions }}</li>
-            <li><strong>Crowd level:</strong> {{ event.accessibility_profile.crowd_level }}</li>
-
-            {% if event.accessibility_profile.sensory_level %}
-                <li><strong>Sensory level:</strong> {{ event.accessibility_profile.sensory_level }}</li>
-            {% endif %}
-        </ul>
-
-        {% if event.accessibility_profile.additional_notes %}
-            <h3>Additional notes</h3>
-            <p>{{ event.accessibility_profile.additional_notes }}</p>
-        {% endif %}
-
-        <p><em>Accessibility information is provided as guidance and may vary by individual needs.</em></p>
-    {% else %}
-        <p><strong>Accessibility information is not available for this event.</strong></p>
+  <h2>Practical info</h2>
+  <ul>
+    {% if event.age_min or event.age_max %}
+      <li><strong>Age range:</strong>
+        {% if event.age_min %}{{ event.age_min }}{% else %}Any{% endif %}
+        –
+        {% if event.age_max %}{{ event.age_max }}{% else %}Any{% endif %}
+      </li>
     {% endif %}
+
+    {% if event.price is not None %}
+      <li><strong>Price:</strong> £{{ event.price }}</li>
+    {% endif %}
+
+    <li><strong>Booking required:</strong> {{ event.booking_required|yesno:"Yes,No" }}</li>
+
+    {% if event.booking_required and event.booking_url %}
+      <li><strong>Booking link:</strong> <a href="{{ event.booking_url }}">{{ event.booking_url }}</a></li>
+    {% endif %}
+  </ul>
+
+  <h2>Accessibility</h2>
+
+  {% if event.accessibility_profile %}
+    <ul>
+      <li><strong>Wheelchair access:</strong> {{ event.accessibility_profile.wheelchair_access|yesno:"Yes,No" }}</li>
+
+      <li><strong>Accessible toilets:</strong>
+        {% if event.accessibility_profile.accessible_toilets is None %}
+          Unknown
+        {% else %}
+          {{ event.accessibility_profile.accessible_toilets|yesno:"Yes,No" }}
+        {% endif %}
+      </li>
+
+      <li><strong>Quiet space available:</strong>
+        {% if event.accessibility_profile.quiet_space_available is None %}
+          Unknown
+        {% else %}
+          {{ event.accessibility_profile.quiet_space_available|yesno:"Yes,No" }}
+        {% endif %}
+      </li>
+
+      {% if event.accessibility_profile.noise_level %}
+        <li><strong>Noise:</strong> {{ event.accessibility_profile.noise_level.label }}</li>
+      {% endif %}
+      {% if event.accessibility_profile.lighting_conditions %}
+        <li><strong>Lighting:</strong> {{ event.accessibility_profile.lighting_conditions.label }}</li>
+      {% endif %}
+      {% if event.accessibility_profile.crowd_level %}
+        <li><strong>Crowd:</strong> {{ event.accessibility_profile.crowd_level.label }}</li>
+      {% endif %}
+      {% if event.accessibility_profile.sensory_level %}
+        <li><strong>Overall sensory load:</strong> {{ event.accessibility_profile.sensory_level.label }}</li>
+      {% endif %}
+    </ul>
+
+    {% if event.accessibility_profile.additional_notes %}
+      <h3>Additional notes</h3>
+      <p>{{ event.accessibility_profile.additional_notes }}</p>
+    {% endif %}
+
+  {% else %}
+    <p><strong>No accessibility profile has been provided for this event yet.</strong></p>
+  {% endif %}
+
 </body>
 </html>

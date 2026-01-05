@@ -13,7 +13,7 @@ Change Log:
 ------------------------------------------------------------
 Version | Date       | Change Description                                  | Reference
 ------------------------------------------------------------
-v1.0    | 2026-01-04 | Initial event list template with empty-state message| DEV-121
+v2.0    | 2026-01-04 | Initial event list template with empty-state message| DEV-141
 ============================================================
 -->
 
@@ -22,33 +22,59 @@ v1.0    | 2026-01-04 | Initial event list template with empty-state message| DEV
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Events</title>
+  <meta charset="UTF-8">
+  <title>Events</title>
 </head>
 <body>
-    <h1>Events</h1>
+  <h1>Events</h1>
 
-    {% comment %} if events exist list them else say no events found {% endcomment %}
-    {% if events %}
-        <ul>
-            {% for event in events %}
-                <li>
-                    <h2>{{ event.title }}</h2>
-                    <p>{{ event.start_datetime }} – {{ event.end_datetime }}</p>
-                    <p><strong>Location:</strong> {{ event.location_text }}</p>
+  {% if events %}
+    <ul>
+      {% for event in events %}
+        <li>
+          <h2>{{ event.title }}</h2>
 
-                    <p>
-                        <a href="{% url 'main:event_detail' event.pk %}">
-                            View details
-                        </a>
-                    </p>
-                    <hr>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p><strong>No events found.</strong></p>
-        <p>Please check back later.</p>
-    {% endif %}
+          <p>
+            <strong>When:</strong>
+            {{ event.start_datetime|date:"D j M Y, H:i" }}
+            –
+            {{ event.end_datetime|date:"H:i" }}
+          </p>
+
+          <p><strong>Where:</strong> {{ event.location_text }}{% if event.postcode %} ({{ event.postcode }}){% endif %}</p>
+
+          {% if event.category %}
+            <p><strong>Category:</strong> {{ event.category.label }}</p>
+          {% endif %}
+
+          {% if event.accessibility_profile %}
+            <p><strong>Accessibility (quick view):</strong></p>
+            <ul>
+              {% if event.accessibility_profile.noise_level %}
+                <li><strong>Noise:</strong> {{ event.accessibility_profile.noise_level.label }}</li>
+              {% endif %}
+              {% if event.accessibility_profile.lighting_conditions %}
+                <li><strong>Lighting:</strong> {{ event.accessibility_profile.lighting_conditions.label }}</li>
+              {% endif %}
+              {% if event.accessibility_profile.crowd_level %}
+                <li><strong>Crowd:</strong> {{ event.accessibility_profile.crowd_level.label }}</li>
+              {% endif %}
+              {% if event.accessibility_profile.sensory_level %}
+                <li><strong>Overall sensory load:</strong> {{ event.accessibility_profile.sensory_level.label }}</li>
+              {% endif %}
+            </ul>
+          {% endif %}
+
+          <p>
+            <a href="{% url 'main:event_detail' event.pk %}">View details</a>
+          </p>
+          <hr>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p><strong>No events found.</strong></p>
+    <p>Please check back later.</p>
+  {% endif %}
 </body>
 </html>
