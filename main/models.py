@@ -43,7 +43,6 @@ class LookupOption(models.Model):
     class OptionType(models.TextChoices):
         EVENT_CATEGORY = "EVENT_CATEGORY"
         ACCESSIBILITY_LEVEL = "ACCESSIBILITY_LEVEL"
-        # (you can keep this generic if you want)
 
     option_type = models.CharField(
         max_length=50,
@@ -115,25 +114,33 @@ class AccessibilityProfile(models.Model):
         LookupOption,
         on_delete=models.PROTECT,
         related_name="noise_profiles",
-        limit_choices_to={"option_type": "NOISE_LEVEL"},
+        limit_choices_to={"option_type": "ACCESSIBILITY_LEVEL",
+                          "category__code": "NOISE_LEVEL",
+                          "is_active":True},
     )
     lighting_conditions = models.ForeignKey(
         LookupOption,
         on_delete=models.PROTECT,
         related_name="lighting_profiles",
-        limit_choices_to={"option_type": "LIGHTING_CONDITION"},
+        limit_choices_to={"option_type": "ACCESSIBILITY_LEVEL",
+                          "category__code": "LIGHTING_CONDITIONS",
+                          "is_active":True}
     )
     crowd_level = models.ForeignKey(
         LookupOption,
         on_delete=models.PROTECT,
         related_name="crowd_profiles",
-        limit_choices_to={"option_type": "CROWD_LEVEL"},
+        limit_choices_to={"option_type": "ACCESSIBILITY_LEVEL",
+                    "category__code": "CROWD_LEVEL",
+                    "is_active":True}
     )
     sensory_level = models.ForeignKey(
         LookupOption,
         on_delete=models.PROTECT,
         related_name="sensory_profiles",
-        limit_choices_to={"option_type": "SENSORY_LEVEL"},
+        limit_choices_to={"option_type": "ACCESSIBILITY_LEVEL",
+                         "category__code": "SENSORY_LEVEL",
+                            "is_active":True}     
     )
 
     additional_notes = models.TextField(blank=True)
